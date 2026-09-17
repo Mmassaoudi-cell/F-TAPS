@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+*.pyo
+
+# Manuscript, generated figures/tables, and result artifacts are intentionally
+# excluded from this code repository.
+manuscript/
+results/
+docs/
+
+# Third-party copyrighted material (not for redistribution) and local scratch
+*.pdf
+*.zip
+
+# Editor/session artifacts
+.claude/
