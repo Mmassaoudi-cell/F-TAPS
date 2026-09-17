@@ -2,7 +2,6 @@
 
 Reference implementation of **F-TAPS**, a parameter-shared, threat-risk-weighted multi-agent actor-critic for incentive-driven honeypot deployment in smart-grid Advanced Metering Infrastructure (AMI), together with the full simulation environment, benchmark suite, and experiment scripts used to evaluate it.
 
-F-TAPS replaces the independent per-agent actor-critic pairs used in prior MADDPG-based Stackelberg mechanisms with a single permutation-invariant, parameter-shared actor-critic pair reused across all agents, and reweights defense-data value by locally observed attack intensity. This gives an $O(1)$ (rather than $O(K)$) parameter count in the number of participating nodes $K$, with no loss in social welfare.
 
 ## Setup
 
