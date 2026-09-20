@@ -1,0 +1,25 @@
+seed,split,purpose
+1,design,"implementation/smoke-test only, never reported as a result"
+2,design,"implementation/smoke-test only, never reported as a result"
+3,design,"implementation/smoke-test only, never reported as a result"
+42,reproduction,"exact source-paper seed, used only in SOURCE_METHOD_REPRODUCTION"
+100,validation,candidate screening (Stage 1-3) and Optuna hyperparameter tuning
+101,validation,candidate screening (Stage 1-3) and Optuna hyperparameter tuning
+102,validation,candidate screening (Stage 1-3) and Optuna hyperparameter tuning
+103,validation,candidate screening (Stage 1-3) and Optuna hyperparameter tuning
+104,validation,candidate screening (Stage 1-3) and Optuna hyperparameter tuning
+105,validation,candidate screening (Stage 1-3) and Optuna hyperparameter tuning
+106,validation,candidate screening (Stage 1-3) and Optuna hyperparameter tuning
+107,validation,candidate screening (Stage 1-3) and Optuna hyperparameter tuning
+108,validation,candidate screening (Stage 1-3) and Optuna hyperparameter tuning
+109,validation,candidate screening (Stage 1-3) and Optuna hyperparameter tuning
+1000,test,"final benchmark comparison, ablation, robustness, statistics -- held out until FINAL_MODEL_CONFIG.yaml is frozen"
+1001,test,"final benchmark comparison, ablation, robustness, statistics -- held out until FINAL_MODEL_CONFIG.yaml is frozen"
+1002,test,"final benchmark comparison, ablation, robustness, statistics -- held out until FINAL_MODEL_CONFIG.yaml is frozen"
+1003,test,"final benchmark comparison, ablation, robustness, statistics -- held out until FINAL_MODEL_CONFIG.yaml is frozen"
+1004,test,"final benchmark comparison, ablation, robustness, statistics -- held out until FINAL_MODEL_CONFIG.yaml is frozen"
+1005,test,"final benchmark comparison, ablation, robustness, statistics -- held out until FINAL_MODEL_CONFIG.yaml is frozen"
+1006,test,"final benchmark comparison, ablation, robustness, statistics -- held out until FINAL_MODEL_CONFIG.yaml is frozen"
+1007,test,"final benchmark comparison, ablation, robustness, statistics -- held out until FINAL_MODEL_CONFIG.yaml is frozen"
+1008,test,"final benchmark comparison, ablation, robustness, statistics -- held out until FINAL_MODEL_CONFIG.yaml is frozen"
+1009,test,"final benchmark comparison, ablation, robustness, statistics -- held out until FINAL_MODEL_CONFIG.yaml is frozen"

@@ -1,0 +1,69 @@
+# FROZEN final model configuration. Per the master research protocol, the
+# architecture and hyperparameters below are frozen as of this point and are
+# NOT revisited based on TEST-set results. Selected via MODEL_SELECTION_REPORT.md
+# (validation seeds 100-109 only; TEST seeds 1000-1009 untouched until run_benchmarks.py).
+
+model:
+  name: "F_TAPS"
+  full_name: "Threat-Aware Parameter-Shared Multi-Agent Actor-Critic"
+  backbone: "pool"           # DeepSets-style mean+max pooling context (Candidate C)
+  twin_critic: false          # twin critics screened unstable when combined with this backbone (see MODEL_SELECTION_REPORT.md)
+  leader_mode: "greedy"       # exact-leader knapsack screened mixed/negative at K=4; not included (see Candidate B ablation)
+  parameter_sharing: true     # one shared actor + one shared critic reused across all K agents (O(1) params in K)
+
+objective:
+  threat_weighted: true       # Candidate A: eff_quality = quality * (1 + rho * attack_rate)
+  rho: 0.9935931423871028     # Optuna-tuned (Stage 3), see results/screening/tuning/F_TAPS_best.json
+  theta_scale: 5.0            # inherited from SOURCE_METHOD_REPRODUCTION calibration (SOURCE_PAPER_AUDIT.md)
+  reward_weights: {alpha: 1.0, beta: 1.0, gamma: 1.0, delta: 1.0}  # inherited from source reproduction, unchanged
+
+architecture:
+  actor:
+    hidden_layers: [128, 128]
+    activation: "relu"
+    output_activation: "sigmoid"
+    context: "pool (mean+max over other agents' observations), ctx_dim = 2*obs_dim"
+  critic:
+    hidden_layers: [256, 256]
+    activation: "relu"
+    context: "pool (mean+max over other agents' (obs,action) pairs), ctx_dim = 2*(obs_dim+act_dim)"
+  weight_init: "xavier_uniform (PyTorch default Linear init retained; see code/agents/hybrid_marl.py)"
+
+optimizer:
+  actor_lr: 4.335184350704857e-05   # Optuna-tuned
+  critic_lr: 0.004557048882646388   # Optuna-tuned
+  optimizer_type: "Adam"
+  grad_clip_norm: 0.5
+
+training:
+  gamma: 0.99
+  soft_update_tau: 0.001
+  replay_buffer_size: 100000
+  batch_size: 512
+  exploration_noise: {start: 0.3, end: 0.01, decay_schedule: "linear over training steps"}
+  total_steps_final_eval: 15000   # used in run_benchmarks.py (Step 15); reduced from an initial 30000 plan after
+                                   # measuring real per-step cost across all 12 methods, to keep the full TEST-seed
+                                   # sweep (5 learned methods x 10 seeds + scalability x 3 K-configs) tractable
+
+  early_stopping: "none (fixed-horizon online RL, no held-out early-stopping criterion applies to this problem class)"
+
+environment:
+  K_values_evaluated: [4, 10, 15]
+  N_values_evaluated: [3, 4, 5]
+  budgets_evaluated: [100, 200, 300]
+  p_range: [1.0, 20.0]
+  tau_range: [0.1, 20.0]
+  q_max: 20.0
+  cr_max: 10.0
+
+data_protocol:
+  validation_seeds_used_for_selection: [100, 101, 102]
+  validation_seeds_used_for_tuning: [103, 104, 105]
+  test_seeds_frozen_untouched: [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009]
+
+model_selection_metric: "steady-state total social welfare (sps_utility + tpr_utility), Jain fairness index as secondary tiebreaker"
+
+seeds_for_final_statistical_reporting: [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009]
+
+frozen_on: "2026-09-17"
+frozen_by_reference: "MODEL_SELECTION_REPORT.md, results/screening/tuning/F_TAPS_best.json"
